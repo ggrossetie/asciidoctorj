@@ -1,2 +1,5 @@
-*.adoc		eol=lf
-*.asciidoc  eol=lf
+* text=auto eol=lf
+*.rb diff=ruby
+*.java diff=java
+*.adoc eol=lf
+*.asciidoc eol=lf
