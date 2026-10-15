@@ -1,0 +1,12 @@
+description = 'The API of AsciidoctorJ'
+
+dependencies {
+    // the OSGi annotations (@Export) are only needed at compile time
+    compileOnly libs.osgi.annotation
+}
+
+jar {
+    manifest {
+        attributes 'Automatic-Module-Name': 'org.asciidoctor.asciidoctorj.api'
+    }
+}

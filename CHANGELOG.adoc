@@ -33,7 +33,7 @@ Improvements::
 
 Build / Infrastructure::
 
-* Build with Maven (instead of Gradle)
+* Simplify the Gradle build
 
 
 == 3.0.1 (2025-11-06)

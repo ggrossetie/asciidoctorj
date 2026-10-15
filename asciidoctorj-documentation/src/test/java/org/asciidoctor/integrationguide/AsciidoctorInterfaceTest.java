@@ -15,9 +15,9 @@ public class AsciidoctorInterfaceTest {
 
     @Test
     public void testIntroductoryExample() {
-        SimpleAsciidoctorRendering.main(new String[]{"target/test-classes/document.adoc"});
+        SimpleAsciidoctorRendering.main(new String[]{"build/resources/test/document.adoc"});
 
-        File resultFile = new File("target/test-classes/document.html");
+        File resultFile = new File("build/resources/test/document.html");
 
         assertThat(resultFile.exists()).isTrue();
     }

@@ -1,0 +1,47 @@
+plugins {
+    alias(libs.plugins.spring.boot) apply false
+}
+
+def junitBom = libs.junit.bom
+
+subprojects {
+    apply plugin: 'java-library'
+
+    dependencies {
+        testImplementation platform(junitBom)
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release = 17
+        options.encoding = 'UTF-8'
+        options.compilerArgs += ['-Xmaxerrs', '10000']
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+        testLogging {
+            events 'failed'
+            exceptionFormat = 'full'
+        }
+    }
+}
+
+// the modules published to a Maven repository (e.g., ./gradlew publishToMavenLocal)
+configure(subprojects.findAll { it.name in ['asciidoctorj-api', 'asciidoctorj-test-support', 'asciidoctorj-core', 'asciidoctorj-cli'] }) {
+    apply plugin: 'maven-publish'
+
+    java {
+        withSourcesJar()
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = base.archivesName.get()
+                from components.java
+            }
+        }
+    }
+}

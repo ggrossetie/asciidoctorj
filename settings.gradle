@@ -1,0 +1,14 @@
+rootProject.name = 'asciidoctorj-parent'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+include 'asciidoctorj-api',
+        'asciidoctorj-test-support',
+        'asciidoctorj-core',
+        'asciidoctorj-cli',
+        'asciidoctorj-documentation',
+        'asciidoctorj-springboot-integration-test'

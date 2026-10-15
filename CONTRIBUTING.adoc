@@ -24,7 +24,7 @@ Types:
 `refactor`:: a code change that neither fixes a bug nor adds a feature
 `perf`:: a performance improvement
 `style`:: formatting, no change of behavior
-`build`:: build system or dependencies (`pom.xml`)
+`build`:: build system or dependencies (`*.gradle`, `gradle/libs.versions.toml`)
 `ci`:: continuous integration (`.github/workflows`)
 `chore`:: other changes (repository configuration, etc.)
 

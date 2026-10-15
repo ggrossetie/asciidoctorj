@@ -7,9 +7,9 @@ The port follows Asciidoctor Ruby at commit `52871a02` (main branch, 2026-10-11)
 
 == Summary
 
-* Maven multi-module project: `asciidoctorj-api` (the AsciidoctorJ API, unchanged), `asciidoctorj-core` (`org.asciidoctor:asciidoctorj`), `asciidoctorj-cli`, `asciidoctorj-test-support`, `asciidoctorj-documentation`, `asciidoctorj-springboot-integration-test`; `maven.compiler.release` 17, no runtime dependency.
+* Gradle multi-project build: `asciidoctorj-api` (the AsciidoctorJ API, unchanged), `asciidoctorj-core` (`org.asciidoctor:asciidoctorj`), `asciidoctorj-cli`, `asciidoctorj-test-support`, `asciidoctorj-documentation`, `asciidoctorj-springboot-integration-test`; `options.release` 17, no runtime dependency.
 * JDK: `export JAVA_HOME=~/.sdkman/candidates/java/25.0.4-tem` (not the default JDK).
-* Build: `mvn -o verify`, a single test class: `mvn -o test -pl asciidoctorj-core -Dtest=DocumentTest`, compile only: `mvn -q -o test-compile`.
+* Build: `./gradlew --offline build`, a single test class: `./gradlew --offline :asciidoctorj-core:test --tests DocumentTest`, compile only: `./gradlew -q --offline testClasses`.
 * CI: GitHub Actions (`.github/workflows/ci.yml`) on Linux, Windows and macOS.
 * Size: ~29,000 lines (main), ~44,500 lines (test).
 * Test suite: *2847 tests translated from Ruby* (2725 in `asciidoctorj-core`, 122 in `asciidoctorj-cli`) and *422 tests of AsciidoctorJ* (`asciidoctorj-core`, package `org.asciidoctor`; the Groovy tests are converted to Java, the tests that rely on JRuby are removed and the tests that rely on Ruby gems are disabled), 0 failures (all the skipped tests have an explicit `@Disabled` reason).

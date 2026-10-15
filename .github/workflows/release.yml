@@ -17,10 +17,6 @@ concurrency:
   group: release
   cancel-in-progress: false
 
-env:
-  MAVEN_ARGS: --batch-mode --no-transfer-progress
-  VERSIONS_PLUGIN: org.codehaus.mojo:versions-maven-plugin:2.20.1
-
 jobs:
   prepare:
     if: github.ref == 'refs/heads/main'
@@ -64,20 +60,18 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
-          cache: maven
-      - name: Set release version
-        run: mvn $VERSIONS_PLUGIN:set -DnewVersion=${{ steps.versions.outputs.version }} -DgenerateBackupPoms=false
+      - uses: gradle/actions/setup-gradle@v5
       - name: Build and test
-        run: mvn verify
+        run: ./gradlew build -Pversion=${{ steps.versions.outputs.version }}
       - name: Upload jars
         uses: actions/upload-artifact@v7
         with:
           name: jars
           # the core and API jars are copied next to the CLI jar, which references them in its manifest
           path: |
-            asciidoctorj-cli/target/asciidoctorj-${{ steps.versions.outputs.version }}.jar
-            asciidoctorj-cli/target/asciidoctorj-api-${{ steps.versions.outputs.version }}.jar
-            asciidoctorj-cli/target/asciidoctorj-cli-${{ steps.versions.outputs.version }}.jar
+            asciidoctorj-cli/build/libs/asciidoctorj-${{ steps.versions.outputs.version }}.jar
+            asciidoctorj-cli/build/libs/asciidoctorj-api-${{ steps.versions.outputs.version }}.jar
+            asciidoctorj-cli/build/libs/asciidoctorj-cli-${{ steps.versions.outputs.version }}.jar
           if-no-files-found: error
 
   native:
@@ -108,22 +102,22 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: jars
-          path: asciidoctorj-cli/target
+          path: asciidoctorj-cli/build/libs
       - name: Build native image
         shell: bash
         run: tools/build-native.sh
       - name: Smoke test
         shell: bash
-        run: tools/native-smoke-test/run.sh asciidoctorj-cli/target/asciidoctorj "asciidoctorj-cli/target/asciidoctorj-cli-$VERSION.jar"
+        run: tools/native-smoke-test/run.sh asciidoctorj-cli/build/native/asciidoctorj "asciidoctorj-cli/build/libs/asciidoctorj-cli-$VERSION.jar"
       - name: Package native executable
         shell: bash
         run: |
           mkdir dist
           archive="asciidoctorj-$VERSION-${{ matrix.platform }}"
           if [ "$RUNNER_OS" = Windows ]; then
-            (cd asciidoctorj-cli/target && 7z a "../../dist/$archive.zip" asciidoctorj.exe)
+            (cd asciidoctorj-cli/build/native && 7z a "../../../dist/$archive.zip" asciidoctorj.exe)
           else
-            tar -czf "dist/$archive.tar.gz" -C asciidoctorj-cli/target asciidoctorj
+            tar -czf "dist/$archive.tar.gz" -C asciidoctorj-cli/build/native asciidoctorj
           fi
       - name: Upload native executable
         uses: actions/upload-artifact@v7
@@ -143,11 +137,6 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
-        with:
-          distribution: temurin
-          java-version: '25'
-          cache: maven
       - name: Download release assets
         uses: actions/download-artifact@v7
         with:
@@ -162,7 +151,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Commit and tag release version
         run: |
-          mvn $VERSIONS_PLUGIN:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
+          sed -i "s/^version=.*/version=$VERSION/" gradle.properties
           git commit -am "chore(release): $VERSION"
           git tag -a "v$VERSION" -m "Release $VERSION"
           git push origin "v$VERSION"
@@ -173,6 +162,6 @@ jobs:
           gh release create "v$VERSION" dist/* --verify-tag --title "$VERSION" --generate-notes $prerelease
       - name: Bump to next development version
         run: |
-          mvn $VERSIONS_PLUGIN:set -DnewVersion="$NEXT_VERSION" -DgenerateBackupPoms=false
+          sed -i "s/^version=.*/version=$NEXT_VERSION/" gradle.properties
           git commit -am "chore(release): prepare next development iteration ($NEXT_VERSION)"
           git push origin HEAD:main

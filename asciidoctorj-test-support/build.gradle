@@ -1,0 +1,8 @@
+description = 'JUnit 5 extensions to test AsciidoctorJ and its extensions'
+
+dependencies {
+    api project(':asciidoctorj-api')
+    api platform(libs.junit.bom)
+    api 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation libs.assertj
+}

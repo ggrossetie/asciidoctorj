@@ -15,9 +15,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  MAVEN_ARGS: --batch-mode --no-transfer-progress
-
 jobs:
   build:
     name: build (${{ matrix.os }}, Java ${{ matrix.java }})
@@ -38,15 +35,15 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-          cache: maven
+      - uses: gradle/actions/setup-gradle@v5
       - name: Build and test
-        run: mvn verify
+        run: ./gradlew build
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: test-reports-${{ matrix.os }}-java-${{ matrix.java }}
-          path: '*/target/*-reports/'
+          path: '*/build/reports/tests/'
 
   native:
     name: native (${{ matrix.platform }})
@@ -70,17 +67,17 @@ jobs:
           java-version: '25'
           distribution: graalvm-community
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          cache: maven
+      - uses: gradle/actions/setup-gradle@v5
       - name: Build CLI jar
-        run: mvn --projects asciidoctorj-cli --also-make -DskipTests package
+        run: ./gradlew :asciidoctorj-cli:assemble
       - name: Build native image
         shell: bash
         run: tools/build-native.sh
       - name: Smoke test
         shell: bash
-        run: tools/native-smoke-test/run.sh asciidoctorj-cli/target/asciidoctorj asciidoctorj-cli/target/asciidoctorj-cli-*.jar
+        run: tools/native-smoke-test/run.sh asciidoctorj-cli/build/native/asciidoctorj asciidoctorj-cli/build/libs/asciidoctorj-cli-*[0-9T].jar
       - name: Upload native executable
         uses: actions/upload-artifact@v7
         with:
           name: asciidoctorj-${{ matrix.platform }}
-          path: asciidoctorj-cli/target/asciidoctorj${{ runner.os == 'Windows' && '.exe' || '' }}
+          path: asciidoctorj-cli/build/native/asciidoctorj${{ runner.os == 'Windows' && '.exe' || '' }}

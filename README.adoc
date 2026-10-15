@@ -176,18 +176,18 @@ The features that rely on Ruby are not supported: Ruby extensions and libraries 
 
 == Development
 
-AsciidoctorJ is built with Maven (3.9+) and JDK 17 or newer.
+AsciidoctorJ is built with Gradle (using the Gradle Wrapper) and JDK 17 or newer.
 
 [source,shell]
 ----
-mvn verify
+./gradlew build
 ----
 
 Run a single test class:
 
 [source,shell]
 ----
-mvn test -pl asciidoctorj-core -Dtest=DocumentTest
+./gradlew :asciidoctorj-core:test --tests DocumentTest
 ----
 
 === Project layout
@@ -216,9 +216,9 @@ The command line interface can be compiled to a native executable with {uri-graa
 
 [source,shell]
 ----
-mvn --projects asciidoctorj-cli --also-make -DskipTests package
+./gradlew :asciidoctorj-cli:assemble
 tools/build-native.sh
-./asciidoctorj-cli/target/asciidoctorj -o - README.adoc
+./asciidoctorj-cli/build/native/asciidoctorj -o - README.adoc
 ----
 
 The jars contain the native image configuration (`META-INF/native-image`), so the library can also be embedded in another native application.
