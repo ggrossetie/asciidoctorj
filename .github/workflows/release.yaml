@@ -24,7 +24,8 @@ env:
 
 jobs:
   release:
-    if: github.ref == 'refs/heads/main'
+    # main, or a maintenance branch such as v3.0.x
+    if: github.ref == 'refs/heads/main' || (startsWith(github.ref, 'refs/heads/v') && endsWith(github.ref, '.x'))
     environment: release
     runs-on: ubuntu-latest
     permissions:
@@ -71,7 +72,7 @@ jobs:
           sed -i "s/^version=.*/version=$RELEASE_VERSION/" gradle.properties
           # roll the "Unreleased" section into "<version> (<date>)" and start a new "Unreleased" section
           npx --yes @bestikk/changelog@1.1.0 release "$RELEASE_VERSION" --release-heading "$CHANGELOG_RELEASE_HEADING"
-          # the documentation on main describes the latest final release
+          # the documentation of the branch describes its latest final release
           if [[ "$RELEASE_VERSION" != *-* ]]; then
             gradle_version() { sed -n "s/^ *$1 = '\(.*\)'/\1/p" build.gradle; }
             sed -i -E \
@@ -92,9 +93,9 @@ jobs:
         run: |
           sed -i "s/^version=.*/version=$NEXT_VERSION/" gradle.properties
           git commit -am "Prepare next development iteration $NEXT_VERSION"
-      # push before publishing, so that a release that cannot be tagged on main is never published
+      # push before publishing, so that a release that cannot be tagged on the branch is never published
       - name: Push the commits and the tag
-        run: git push --atomic origin HEAD:main "refs/tags/v$RELEASE_VERSION"
+        run: git push --atomic origin "HEAD:$GITHUB_REF_NAME" "refs/tags/v$RELEASE_VERSION"
       - name: Publish to Maven Central
         run: |
           git checkout "v$RELEASE_VERSION"
