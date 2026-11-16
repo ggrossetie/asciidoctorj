@@ -10,7 +10,7 @@ The very first step to integrate AsciidoctorJ is to add the required dependencie
 Depending on your build system you have to add a dependency on the artifact `asciidoctorj` with the group id `org.asciidoctor` to your build file.
 The following snippets show what you have to add in case you use Maven, Gradle, Ivy or SBT.
 
-NOTE: The snippets use the JRuby implementation (`org.asciidoctor:asciidoctorj`).
+NOTE: The snippets use the JRuby implementation (`org.asciidoctor:asciidoctorj-jruby`).
 To use the Java implementation, replace `asciidoctorj` with `asciidoctorj-java`: the code below is the same.
 See xref:installation.adoc[] for the details.
 
@@ -21,7 +21,7 @@ See xref:installation.adoc[] for the details.
 <dependencies>
   <dependency>
     <groupId>org.asciidoctor</groupId>
-    <artifactId>asciidoctorj</artifactId>
+    <artifactId>asciidoctorj-jruby</artifactId>
     <version>{artifact-version}</version> <!--1-->
   </dependency>
 </dependencies>
@@ -32,7 +32,7 @@ See xref:installation.adoc[] for the details.
 .Declaring the dependency in a Gradle build file (e.g., build.gradle)
 ----
 dependencies {
-  compile 'org.asciidoctor:asciidoctorj:{artifact-version}' // <1>
+  compile 'org.asciidoctor:asciidoctorj-jruby:{artifact-version}' // <1>
 }
 ----
 

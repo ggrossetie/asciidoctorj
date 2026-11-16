@@ -37,7 +37,7 @@ See this https://github.com/asciidoctor/asciidoctorj/issues/1286#issuecomment-23
         <requiresUnpack>
             <dependency>
                 <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctorj</artifactId>
+                <artifactId>asciidoctorj-jruby</artifactId>
             </dependency>
         </requiresUnpack>
     </configuration>

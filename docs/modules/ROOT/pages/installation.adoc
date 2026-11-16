@@ -7,7 +7,7 @@
 To start using AsciidoctorJ, you need to add the required dependency to the dependency management system of your choice, Maven, Gradle or Apache Ivy.
 If you don't use a Dependency Management system please check the dependency graph and add all jars in it to your classpath.
 
-AsciidoctorJ has two implementations of the same API: the JRuby implementation (`org.asciidoctor:asciidoctorj`) and the Java implementation (`org.asciidoctor:asciidoctorj-java`).
+AsciidoctorJ has two implementations of the same API: the JRuby implementation (`org.asciidoctor:asciidoctorj-jruby`) and the Java implementation (`org.asciidoctor:asciidoctorj-java`).
 Depend on one of them, not both.
 See xref:index.adoc#which-implementation[Which implementation to use] to choose.
 
@@ -22,7 +22,7 @@ See xref:index.adoc#which-implementation[Which implementation to use] to choose.
 <dependencies>
   <dependency>
     <groupId>org.asciidoctor</groupId>
-    <artifactId>asciidoctorj</artifactId>
+    <artifactId>asciidoctorj-jruby</artifactId>
     <version>{artifact-version}</version> <!--1-->
   </dependency>
 </dependencies>
@@ -33,7 +33,7 @@ See xref:index.adoc#which-implementation[Which implementation to use] to choose.
 .Declaring the dependency in a Gradle build file (e.g., build.gradle)
 ----
 dependencies {
-  compile 'org.asciidoctor:asciidoctorj:{artifact-version}'
+  compile 'org.asciidoctor:asciidoctorj-jruby:{artifact-version}'
 }
 ----
 

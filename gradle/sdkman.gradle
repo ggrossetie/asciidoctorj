@@ -4,9 +4,10 @@ sdkman {
     consumerKey = project.sdkman_consumer_key
     consumerToken = project.sdkman_consumer_token
     candidate = rootProject.name
-    version = project.version
+    // the JRuby distribution is published as <version>-jruby, the version without suffix is reserved for the Java implementation
+    version = "${project.version}-jruby"
     hashtag = "#asciidoctorj"
-    url = "https://repo1.maven.org/maven2/org/asciidoctor/asciidoctorj/${rootProject.version}/asciidoctorj-${rootProject.version}-bin.zip"
+    url = "https://repo1.maven.org/maven2/org/asciidoctor/asciidoctorj-jruby/${rootProject.version}/asciidoctorj-jruby-${rootProject.version}-bin.zip"
 }
 
 task distributionAvailable() {

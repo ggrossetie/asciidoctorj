@@ -154,7 +154,7 @@ If you don't use a Dependency Management system please check the dependency grap
 <dependencies>
   <dependency>
     <groupId>org.asciidoctor</groupId>
-    <artifactId>asciidoctorj</artifactId>
+    <artifactId>asciidoctorj-jruby</artifactId>
     <version>{artifact-version}</version> <!--1-->
   </dependency>
 </dependencies>
@@ -165,7 +165,7 @@ If you don't use a Dependency Management system please check the dependency grap
 .Declaring the dependency in a Gradle build file (e.g., build.gradle)
 ----
 dependencies {
-  compile 'org.asciidoctor:asciidoctorj:{artifact-version}'
+  compile 'org.asciidoctor:asciidoctorj-jruby:{artifact-version}'
 }
 ----
 

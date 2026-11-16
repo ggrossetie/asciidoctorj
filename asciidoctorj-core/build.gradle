@@ -7,8 +7,17 @@ import org.ysb33r.gradle.jruby.api.base.tasks.JRubyPrepare
 
 project.ext.publicationName = "mavenAsciidoctorJ"
 
+// the artifact is published as asciidoctorj-jruby (the distribution is attached to it)
+base {
+  archivesName = 'asciidoctorj-jruby'
+}
+
 apply from: rootProject.file('gradle/publish.gradle')
 apply from: rootProject.file('gradle/signing.gradle')
+
+publishing.publications.named(project.ext.publicationName) {
+  artifactId = 'asciidoctorj-jruby'
+}
 
 repositories {
   ruby.gems()

@@ -15,6 +15,7 @@ For a detailed view of what has changed, refer to the {url-repo}/commits/main[co
 
 === Improvements
 
+* BREAKING: Publish the JRuby implementation as `org.asciidoctor:asciidoctorj-jruby` instead of `org.asciidoctor:asciidoctorj` (including the distribution zip), and the Java implementation as `org.asciidoctor:asciidoctorj-java`
 * BREAKING: Upgrade to JRuby 10.1.1.0. Requires Java 21 (#1308)
 * BREAKING: Remove `Asciidoctor#shutdown()`, use `Asciidoctor#close()` instead (#1325)
 * BREAKING: Remove `Asciidoctor#requireLibrary(String...)`, `Asciidoctor#requireLibraries(Collection)` and `Asciidoctor#rubyExtensionRegistry()`, which only make sense with an embedded Asciidoctor (Ruby): use the methods of `AsciidoctorJRuby` instead, e.g. `asciidoctor.unwrap(AsciidoctorJRuby.class).requireLibrary("asciidoctor-diagram")` (#1325)

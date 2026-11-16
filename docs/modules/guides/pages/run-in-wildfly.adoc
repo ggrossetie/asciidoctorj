@@ -28,7 +28,7 @@ If you want to use AsciidoctorJ in an application deployed on [app]_WildFly_, yo
 </module>
 ----
 +
-TIP: The runtime dependencies of AsciidoctorJ can be copied into the module folder with `mvn dependency:copy-dependencies -DincludeScope=runtime` on a project that depends on `org.asciidoctor:asciidoctorj`.
+TIP: The runtime dependencies of AsciidoctorJ can be copied into the module folder with `mvn dependency:copy-dependencies -DincludeScope=runtime` on a project that depends on `org.asciidoctor:asciidoctorj-jruby`.
 . Copy the jar files into the same folder as the _module.xml_ file.
 . Make sure the version numbers of the jar files agree with what's in the current set.
 Restart WildFly for the new module to take effect.
@@ -54,7 +54,7 @@ Dependencies: org.asciidoctor
 <dependencies>
   <dependency>
     <groupId>org.asciidoctor</groupId>
-    <artifactId>asciidoctorj</artifactId>
+    <artifactId>asciidoctorj-jruby</artifactId>
     <version>{artifact-version}</version>
     <scope>provided</scope> <!--1-->
     ...
