@@ -23,6 +23,7 @@ It needs Java 17 or newer and has no runtime dependency, other than the API.
 An application must use one of the implementations, not both.
 ====
 
+[#which-implementation]
 == Which implementation to use
 
 === JRuby implementation

@@ -7,6 +7,12 @@
 To start using AsciidoctorJ, you need to add the required dependency to the dependency management system of your choice, Maven, Gradle or Apache Ivy.
 If you don't use a Dependency Management system please check the dependency graph and add all jars in it to your classpath.
 
+AsciidoctorJ has two implementations of the same API: the JRuby implementation (`org.asciidoctor:asciidoctorj`) and the Java implementation (`org.asciidoctor:asciidoctorj-java`).
+Depend on one of them, not both.
+See xref:index.adoc#which-implementation[Which implementation to use] to choose.
+
+== JRuby implementation
+
 // SW: Need functional tests for a java maven project and a java gradle project
 
 [source,xml]
@@ -47,6 +53,41 @@ libraryDependencies += "org.asciidoctor" % "asciidoctorj" % "{artifact-version}"
 :dependencies [[org.asciidoctor/asciidoctorj "{artifact-version}"]]
 ----
 
+NOTE: The versions of Asciidoctor and AsciidoctorJ no longer align since version 1.6.0 of AsciidoctorJ.
+Please check the corresponding release notes to find out which version of Asciidoctor is packaged if you are embedding the library.
+If you use the distribution you can call `asciidoctorj --version` to get the version of Asciidoctor that is embedded in AsciidoctorJ.
+This applies to the JRuby implementation: the Java implementation doesn't embed Asciidoctor (Ruby), it is a port of Asciidoctor.
+
+== Java implementation
+
+[source,xml]
+[subs="specialcharacters,attributes"]
+.Declaring the dependency in a Maven build file (i.e., pom.xml)
+----
+<dependencies>
+  <dependency>
+    <groupId>org.asciidoctor</groupId>
+    <artifactId>asciidoctorj-java</artifactId>
+    <version>{artifact-version}</version>
+  </dependency>
+</dependencies>
+----
+
+[source,groovy]
+[subs="specialcharacters,attributes"]
+.Declaring the dependency in a Gradle build file (e.g., build.gradle)
+----
+dependencies {
+  implementation 'org.asciidoctor:asciidoctorj-java:{artifact-version}'
+}
+----
+
+The Java implementation requires Java 17 or newer and has no runtime dependency other than the API (`asciidoctorj-api`), which is added transitively.
+It does not support Ruby extensions and libraries, nor the gems that AsciidoctorJ wraps (Asciidoctor PDF, Asciidoctor EPUB3, etc.).
+See the xref:guides:migrate-to-java-implementation.adoc[migration guide] for details.
+
+== Build tools
+
 [TIP]
 ====
 In addition to using AsciidoctorJ directly, you can invoke it as part of your build using the Maven or Gradle plugin.
@@ -55,7 +96,3 @@ In addition to using AsciidoctorJ directly, you can invoke it as part of your bu
 - {url-maven-guide}[How to Install and Use the Asciidoctor Maven Plugin]
 - {url-gradle-guide}[How to Install and Use the Asciidoctor Gradle Plugin]
 ====
-
-NOTE: The versions of Asciidoctor and AsciidoctorJ no longer align since version 1.6.0 of AsciidoctorJ.
-Please check the corresponding release notes to find out which version of Asciidoctor is packaged if you are embedding the library.
-If you use the distribution you can call `asciidoctorj --version` to get the version of Asciidoctor that is embedded in AsciidoctorJ.

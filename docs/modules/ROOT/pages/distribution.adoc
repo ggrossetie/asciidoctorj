@@ -9,11 +9,23 @@
 :url-maven-artifact-api-detail: https://central.sonatype.com/artifact/{asciidoctorj-group-id}/asciidoctorj-api/{artifact-version}
 :url-maven-artifact-api-file: https://search.maven.org/remotecontent?filepath=org/asciidoctor/asciidoctorj-api/{artifact-version}/asciidoctorj-api-{artifact-version}
 
+:url-maven-artifact-java-query: https://central.sonatype.com/artifact/{asciidoctorj-group-id}/asciidoctorj-java/{artifact-version}/versions
+:url-maven-artifact-java-detail: https://central.sonatype.com/artifact/{asciidoctorj-group-id}/asciidoctorj-java/{artifact-version}
+:url-maven-artifact-java-file: https://search.maven.org/remotecontent?filepath=org/asciidoctor/asciidoctorj-java/{artifact-version}/asciidoctorj-java-{artifact-version}
+
+:url-maven-artifact-java-cli-query: https://central.sonatype.com/artifact/{asciidoctorj-group-id}/asciidoctorj-java-cli/{artifact-version}/versions
+:url-maven-artifact-java-cli-detail: https://central.sonatype.com/artifact/{asciidoctorj-group-id}/asciidoctorj-java-cli/{artifact-version}
+:url-maven-artifact-java-cli-file: https://search.maven.org/remotecontent?filepath=org/asciidoctor/asciidoctorj-java-cli/{artifact-version}/asciidoctorj-java-cli-{artifact-version}
+
 AsciidoctorJ is published to Maven Central.
 The artifact information can be found in the tables below.
 
+AsciidoctorJ has two implementations that share the same API (`asciidoctorj-api`): the JRuby implementation (`asciidoctorj`) and the Java implementation (`asciidoctorj-java`).
+An application uses one of them, not both.
+See xref:index.adoc[] to choose.
+
 [cols="2,2,^2,4"]
-.Artifact information for AsciidoctorJ in Maven Central
+.Artifact information for AsciidoctorJ in Maven Central (JRuby implementation)
 |===
 |Group Id |Artifact Id |Version |Download
 
@@ -36,6 +48,29 @@ The artifact information can be found in the tables below.
 |asciidoctorj-pdf
 |{asciidoctorj-pdf-version}
 |{empty}
+|===
+
+NOTE: `asciidoctorj-epub3` and `asciidoctorj-pdf` bundle Ruby gems (Asciidoctor EPUB3 and Asciidoctor PDF), so they are only supported by the JRuby implementation.
+
+[cols="2,2,^2,4"]
+.Artifact information for AsciidoctorJ in Maven Central (Java implementation)
+|===
+|Group Id |Artifact Id |Version |Download
+
+|{asciidoctorj-group-id}
+|{url-maven-artifact-api-query}[asciidoctorj-api]
+|{url-maven-artifact-api-detail}[{artifact-version}]
+|{url-maven-artifact-api-file}.pom[pom] {url-maven-artifact-api-file}.jar[jar] {url-maven-artifact-api-file}-javadoc.jar[javadoc (jar)] {url-maven-artifact-api-file}-sources.jar[sources (jar)]
+
+|{asciidoctorj-group-id}
+|{url-maven-artifact-java-query}[asciidoctorj-java]
+|{url-maven-artifact-java-detail}[{artifact-version}]
+|{url-maven-artifact-java-file}.pom[pom] {url-maven-artifact-java-file}.jar[jar] {url-maven-artifact-java-file}-javadoc.jar[javadoc (jar)] {url-maven-artifact-java-file}-sources.jar[sources (jar)]
+
+|{asciidoctorj-group-id}
+|{url-maven-artifact-java-cli-query}[asciidoctorj-java-cli]
+|{url-maven-artifact-java-cli-detail}[{artifact-version}]
+|{url-maven-artifact-java-cli-file}.pom[pom] {url-maven-artifact-java-cli-file}.jar[jar]
 |===
 
 CAUTION: The artifactId changed to `asciidoctorj` starting in 1.5.0.
